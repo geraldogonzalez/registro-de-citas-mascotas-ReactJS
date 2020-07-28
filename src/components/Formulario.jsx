@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import PropTypes from 'prop-types';
 
-const Formulario = () => {
+const Formulario = ({guardarCita}) => {
 
     // Creamos state para el formulario.
 
@@ -41,11 +43,23 @@ const Formulario = () => {
             return;
         }
 
+        // Eliminar error de campos vacíos.
+        setError(false);
+
         // Asignar ID.
+        cita.id = uuidv4();
 
         // Crear la cita.
+        guardarCita(cita);
 
         // Reiniciar formulario.
+        setCita({
+            mascota: '',
+            propietario: '',
+            fecha: '',
+            hora: '',
+            sintomas: ''
+        });
 
     }
 
@@ -110,6 +124,10 @@ const Formulario = () => {
             </form>
         </Fragment>
     );
+}
+
+Formulario.propTypes = {
+    guardarCita: PropTypes.func.isRequired
 }
  
 export default Formulario;
